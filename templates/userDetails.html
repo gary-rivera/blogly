@@ -1,16 +1,16 @@
-{% extends 'base.html' %}
-{% block title %} {{user.full_name}} {% endblock %} 
-{% block content%}
-
+{% extends 'base.html' %} 
+{% block title %} User Info {% endblock %} 
+{% block content%} 
 
 {% if user.image_url %}
-<img src="{{url}}" 
-alt="{{user_name}}">
+<img src="{{user.image_url}}" />
+{% else %}
+<img src="https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"/>
 {% endif %}
 
-<form action="#">
-    <button class="btn btn-submit">Edit</button>
-    <button class="btn btn-danger">Delete</button>
+<form action="/users/delete" method="POST">
+  <a class="btn btn-primary" href="/users/id/edit">Edit</a>
+  <button class="btn btn-danger">Delete</button>
 </form>
 
 {% endblock %}
