@@ -128,6 +128,13 @@ def show_post(user_id, post_id):
     return render_template('postDetails.html', post=post)
 
 
+@app.route('/posts/<int:post_id>/edit')
+def edit_post_form(post_id):
+    """show edit form page and redirect to the post view"""
+
+    return render_template('editPost.html')
+
+    # return redirect(f"/posts/{post_id}")
 """
 GET /users/[user-id]/posts/new
 Show form to add a post for that user.
