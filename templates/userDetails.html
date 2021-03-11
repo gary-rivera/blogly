@@ -1,16 +1,18 @@
 {% extends 'base.html' %} 
-{% block title %} User Info {% endblock %} 
+{% block title %}{% endblock %} 
 {% block content%} 
 
 {% if user.image_url %}
-<img src="{{user.image_url}}" />
+<img class="user_icon" src="{{user.image_url}}" />
 {% else %}
-<img src="https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"/>
+<img class="user_icon" src="https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"/>
 {% endif %}
-
-<form action="/users/delete" method="POST">
-  <a class="btn btn-primary" href="/users/id/edit">Edit</a>
-  <button class="btn btn-danger">Delete</button>
-</form>
+  <div class="user_details">
+    <h1 class="user_name">{{ user.first_name }} {{ user.last_name }}</h1>
+    <form action="/users/{{user.id}}/delete" method="POST">
+    <a class="btn btn-primary" href="/users/{{user.id}}/edit">Edit</a>
+    <button class="btn btn-danger">Delete</button>
+  </form>
+</div>
 
 {% endblock %}

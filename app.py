@@ -61,5 +61,33 @@ def user_details(user_id):
     user_data = User.query.get_or_404(user_id)
     return render_template('userDetails.html', user=user_data)
 
+@app.route('/users/<int:user_id>/edit')
+def show_edit_user_form(user_id):
+    """Direct to the user edit form page"""
+    user_data = User.query.get_or_404(user_id)
+    return render_template('userEdit.html', user=user_data)
 
+
+@app.route('/users/<int:user_id>/edit', methods=["POST"])
+def edit_user(user_id):
+    """Modify user information"""
+    user_data = User.query.get_or_404(user_id)
+    user_data.first_name = request.form['first_name']
+    user_data.last_name = request.form['last_name']
+    user_data.image_url = request.form['image_url']
+
+    db.session.add(user_data)
+    db.session.commit()
+
+    return redirect('/users')
+
+
+@app.route('/users/<int:user_id>/delete', methods=["POST"])
+def delete_user(user_id):
+    """Delete user information"""
+    user_data = User.query.get_or_404(user_id)
+    db.session.delete(user_data)
+    db.session.commit()
+
+    return redirect("/users")
 # # cross relationship between tables
