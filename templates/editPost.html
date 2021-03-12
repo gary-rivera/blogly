@@ -2,8 +2,8 @@
 {% block title %}Posts{% endblock %} 
 {% block content%} 
 
-<h1>Add Post for {{ user.full_name }}</h1>
-<form action="/users/{{user.id}}/posts/new" method="POST">
+<h1>Edit Post</h1>
+<form action="/posts/{{ post.id }}/edit" method="POST">
   <div>
     <label for="title">Title</label>
     <input
@@ -14,7 +14,7 @@
     />
   </div>
   <div>
-    <label for="content">Content</label>
+    <label for="content">Post Content</label>
     <input
       type="text"
       id="content"
@@ -23,7 +23,7 @@
     />
   </div>
   <button class="btn btn-outline-secondary">Cancel</button>
-  <button class="btn btn-success" type="submit">Add</button>
+  <button class="btn btn-success" type="submit">Edit</button>
 </form>
 
 {% endblock %}

@@ -14,7 +14,8 @@
   </span>
   <a class="btn btn-outline-primary" href="/users/{{post.user.id}}">Cancel</a>
   <a class="btn btn-primary" href="/posts/{{post.id}}/edit">Edit</a>
-  <a class="btn btn-danger" href="/posts/{{post.id}}/delete">Delete</a>
+  
+  <form  action="/posts/{{post.id}}/delete" method="POST"><button class="btn btn-danger">Delete</button></form>
 </div>
 
 {% endblock %}

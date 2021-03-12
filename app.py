@@ -120,8 +120,8 @@ def add_post(user_id):
     return redirect(f"/users/{user_id}")
 
 
-@app.route('/users/<int:user_id>/posts/<int:post_id>')
-def show_post(user_id, post_id):
+@app.route('/posts/<int:post_id>')
+def show_post(post_id):
     """ generate a page with the corresponding users post """
     post = Post.query.get_or_404(post_id)
 
@@ -131,24 +131,30 @@ def show_post(user_id, post_id):
 @app.route('/posts/<int:post_id>/edit')
 def edit_post_form(post_id):
     """show edit form page and redirect to the post view"""
+    post = Post.query.get_or_404(post_id)
+    return render_template('editPost.html', post=post)
 
-    return render_template('editPost.html')
 
-    # return redirect(f"/posts/{post_id}")
-"""
-GET /users/[user-id]/posts/new
-Show form to add a post for that user.
-POST /users/[user-id]/posts/new
-Handle add form; add post and redirect to the user detail page.
-GET /posts/[post-id]
-Show a post.
+@app.route('/posts/<int:post_id>/edit', methods=["POST"])
+def update_post(post_id):
+    """Handle submission, update the form, and """
 
-Show buttons to edit and delete the post.
+    post = Post.query.get_or_404(post_id)
+    post.title = request.form['title']
+    post.content = request.form['content']
 
-GET /posts/[post-id]/edit
-Show form to edit a post, and to cancel (back to user page).
-POST /posts/[post-id]/edit
-Handle editing of a post. Redirect back to the post view.
-POST /posts/[post-id]/delete
-Delete the post.
-"""
+    db.session.add(post)
+    db.session.commit()
+    
+    return redirect(f"/posts/{post_id}")
+
+
+@app.route('/posts/<int:post_id>/delete', methods=["POST"])
+def delete(post_id):
+    """Handle deleting post"""
+    post = Post.query.get_or_404(post_id)
+    user_id = post.user_id
+    db.session.delete(post)
+    db.session.commit()
+
+    return redirect(f"/users/{user_id}")
